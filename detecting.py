@@ -11,10 +11,11 @@ print "Mewsician starting."
 
 while True: # continually in this state
 
+    # THIS SEEMS TO CATCH BOTH EDGES :///////
     GPIO.wait_for_edge(channel, GPIO.FALLING)
     print "Button press detected =========="
 
-    sleep(0.1) # wait for debouncing
+    sleep(3) # wait for debouncing 3 secs
 
     if record:
         print "Stopping recording."
