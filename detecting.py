@@ -1,22 +1,20 @@
-from time import sleep
-
 # adding an event trigger on the rising edge
 
 import CHIP_IO.GPIO as GPIO
-GPIO.setup("XIO-P0", GPIO.IN)
-GPIO.add_event_detect("XIO-P0", GPIO.RISING)
-if GPIO.event_detected("XIO-P0"):
-    print "Button press detected ==========="
 
-def loop():
-    return 0
+channel = "XIO-P0"
+record = False
 
-while True:
-    loop() # prevent exiting
+GPIO.setup(channel, GPIO.IN)
 
-# constantly pump out the current state.
-# if GPIO.input("XIO-P0"):
-# print("HIGH")
-# else:
-# print("LOW")
-# sleep(0.5)
+while True: # continually in this state
+    GPIO.wait_for_edge(channel, GPIO.RISING)
+    print "Button press detected =========="
+    if record:
+        print "Stopping recording."
+        record = False
+    else:
+        print "Starting recording."
+        record = True
+
+GPIO.cleanup()
