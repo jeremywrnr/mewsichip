@@ -6,11 +6,12 @@ channel = "XIO-P0"
 record = False
 
 GPIO.setup(channel, GPIO.IN)
+print "Mewsician starting."
 
 while True: # continually in this state
     GPIO.wait_for_edge(channel, GPIO.RISING)
     print "Button press detected =========="
-    if record:
+    if record == GPIO.input(channel):
         print "Stopping recording."
         record = False
     else:
