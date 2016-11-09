@@ -6,6 +6,7 @@ import CHIP_IO.GPIO as GPIO
 import datetime
 from time import sleep
 
+<<<<<<< HEAD
 GPIO.setup("XIO-P0", GPIO.IN)
 GPIO.add_event_detect("XIO-P0", GPIO.RISING)
 if GPIO.event_detected("XIO-P0"):
@@ -17,4 +18,39 @@ if GPIO.event_detected("XIO-P0"):
     else:
         os.killpg(os.getpdig(musicprocess.pid), signal.SIGTERM)
         is_playing = False
+=======
+# include later:
+# - meteor userId
+# - authentication
+channel = "XIO-P0"
+recording = False
+
+GPIO.setup(channel, GPIO.IN)
+print "Mewsician starting."
+
+def record():
+    print "Starting recording."
+    # trigger external recording
+    # combine current time and uid
+
+def upload():
+    print "Stopping recording."
+    # trigger external uploading
+    # will use userId and auth
+
+while True: # continually in this state
+
+    # THIS SEEMS TO CATCH BOTH EDGES :///////
+    GPIO.wait_for_edge(channel, GPIO.FALLING)
+    print "Button press detected =========="
+
+    if recording:
+        upload()
+        recording = False
+    else:
+        recordi()
+        recording = True
+
+    sleep(3) # wait for debouncing 3 secs, bad.
+>>>>>>> well then
 
