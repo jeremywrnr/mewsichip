@@ -10,7 +10,7 @@ if GPIO.event_detected("XIO-P0"):
 # constantly pump out the current state.
 
 while True:
-    if GPIO.input("CSID0"):
+    if GPIO.input("XIO-P0"):
         print("HIGH")
     else:
         print("LOW")
