@@ -8,11 +8,12 @@ GPIO.add_event_detect("XIO-P0", GPIO.RISING)
 if GPIO.event_detected("XIO-P0"):
     print "Rising edge detected ==========="
 
-# constantly pump out the current state.
-
 while True:
-    if GPIO.input("XIO-P0"):
-        print("HIGH")
-    else:
-        print("LOW")
-    sleep(0.5)
+    # prevent exiting
+
+# constantly pump out the current state.
+# if GPIO.input("XIO-P0"):
+# print("HIGH")
+# else:
+# print("LOW")
+# sleep(0.5)
