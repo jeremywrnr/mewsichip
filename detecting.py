@@ -22,11 +22,12 @@ if GPIO.event_detected("XIO-P0"):
     	os.killpg(os.getpdig(musicprocess.pid), signal.SIGTERM)
     	is_playing = False 
 
-# constantly pump out the current state.
-
 while True:
-    if GPIO.input("XIO-P0"):
-        print("HIGH")
-    else:
-        print("LOW")
-    sleep(0.5)
+    # prevent exiting
+
+# constantly pump out the current state.
+# if GPIO.input("XIO-P0"):
+# print("HIGH")
+# else:
+# print("LOW")
+# sleep(0.5)
