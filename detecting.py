@@ -24,6 +24,6 @@ while True:
         else:
             os.killpg(os.getpgid(musicprocess.pid), signal.SIGTERM)
             is_playing = False
-
+    sleep(3)
 GPIO.cleanup()
 
