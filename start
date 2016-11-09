@@ -10,5 +10,5 @@ ps aux | grep record | head -n3 |\
 # free up any exported GPIOs
 sudo bash ./script/unexport.sh
 
-# beginning running mewsician
-sudo python python/mewsicode.py
+# beginning running mewsician, w/o warnings
+sudo python -W ignore  python/mewsicode.py
