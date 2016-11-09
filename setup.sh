@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+cd "$HOME"
+
 # setup script for mewsician chip (mewsichip)
 
 # setting up CHIP python
