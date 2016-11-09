@@ -4,11 +4,7 @@ import signal
 import subprocess
 import CHIP_IO.GPIO as GPIO
 import datetime
-
-# adding an event trigger on the rising edge
-
-is_playing = False
-global musicprocess
+from time import sleep
 
 GPIO.setup("XIO-P0", GPIO.IN)
 GPIO.add_event_detect("XIO-P0", GPIO.RISING)
