@@ -1,8 +1,8 @@
-#!/bin/bash 
-
-cd "$HOME"
+#!/bin/bash
 
 # setup script for mewsician chip (mewsichip)
+
+cd "$HOME"
 
 # setting up CHIP python
 sudo apt-get update
@@ -22,4 +22,9 @@ sudo rm -rf CHIP_IO
 # ./setup - prep wifi connection
 # ./connect <ssid> <pass>
 git clone https://github.com/jeremywrnr/mewsichip
-source networking.sh
+
+# ./connect <ssid> <pass>
+echo "for wifi run:"
+echo "mewsichip/connect.sh <ssid> <pass>"
+source mewsichip/networking.sh
+ip-setup # from above file

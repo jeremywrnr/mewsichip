@@ -1,7 +1,7 @@
 # source these functions when getting started on the chip
 # install the ssh agent
 
-ip-setup {
+ip-setup() {
   sudo apt-get install avahi-daemon
 }
 
@@ -9,7 +9,7 @@ ip-setup {
 # $1 - network name
 # $2 - network pass
 
-connect {
+connect() {
   sudo nmcli dev disconnect wlan0
   sudo nmcli device wifi connect "$1" password "$2" ifname wlan0
 }
