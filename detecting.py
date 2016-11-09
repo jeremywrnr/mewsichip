@@ -15,4 +15,4 @@ while True:
         print("HIGH")
     else:
         print("LOW")
-    sleep(100)
+    sleep(0.5)
