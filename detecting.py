@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from time import sleep
 import os
 import signal
@@ -21,13 +22,25 @@ if GPIO.event_detected("XIO-P0"):
     else:
         os.killpg(os.getpdig(musicprocess.pid), signal.SIGTERM)
         is_playing = False
+=======
+# adding an event trigger on the rising edge
 
-while True:
-    loop() # prevent exiting
+import CHIP_IO.GPIO as GPIO
 
-# constantly pump out the current state.
-# if GPIO.input("XIO-P0"):
-# print("HIGH")
-# else:
-# print("LOW")
-# sleep(0.5)
+channel = "XIO-P0"
+record = False
+
+GPIO.setup(channel, GPIO.IN)
+>>>>>>> encoding state
+
+while True: # continually in this state
+    GPIO.wait_for_edge(channel, GPIO.RISING)
+    print "Button press detected =========="
+    if record:
+        print "Stopping recording."
+        record = False
+    else:
+        print "Starting recording."
+        record = True
+
+GPIO.cleanup()
