@@ -32,7 +32,7 @@ while True: # continually in this state
         upload()
         recording = False
     else:
-        recordi()
+        record()
         recording = True
 
     sleep(3) # wait for debouncing 3 secs, bad.
