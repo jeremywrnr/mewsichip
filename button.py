@@ -10,10 +10,10 @@ import datetime
 # - authentication
 channel = "XIO-P0"
 recording = False
+mpid = None
 
 GPIO.setup(channel, GPIO.IN)
 print "Mewsician starting."
-musicprocess = None
 
 def record():
     print "Starting recording."
@@ -23,11 +23,12 @@ def record():
     cmd = "arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname
     musicprocess = subprocess.Popen(cmd, stdin=subprocess.PIPE, shell=True )
     print 'musicprocess pid is ', musicprocess.pid
+    return musicprocess.pid
 
-def upload():
+def upload(mpid):
     print "Stopping recording."
-    print 'stop: musicprocess pid is ', musicprocess.pid
-    os.killpg(os.getpgid(musicprocess.pid), signal.SIGTERM)
+    print 'stop: musicprocess pid is ', mpid
+    os.killpg(os.getpgid(mpid), signal.SIGTERM)
     # trigger external uploading
     # will use userId and auth
 
@@ -38,10 +39,10 @@ while True: # continually in this state
     print "Button press detected =========="
 
     if recording:
-        upload()
+        upload(mpid)
         recording = False
     else:
-        record()
+        mpid = record()
         recording = True
 
     sleep(3) # wait for debouncing 3 secs, bad.
