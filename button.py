@@ -20,11 +20,13 @@ def record():
     # combine current time and uid
     fname = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '.mp3'
     # trigger external recording
-    musicprocess = subprocess.Popen( " arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname,
-    stdin=subprocess.PIPE, shell=True )
+    cmd = "arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname
+    musicprocess = subprocess.Popen(cmd, stdin=subprocess.PIPE, shell=True )
+    print 'musicprocess pid is ', musicprocess.pid
 
 def upload():
     print "Stopping recording."
+    print 'stop: musicprocess pid is ', musicprocess.pid
     os.killpg(os.getpgid(musicprocess.pid), signal.SIGTERM)
     # trigger external uploading
     # will use userId and auth
