@@ -13,14 +13,19 @@ recording = False
 
 GPIO.setup(channel, GPIO.IN)
 print "Mewsician starting."
+global musicprocess
 
 def record():
     print "Starting recording."
-    # trigger external recording
     # combine current time and uid
+    fname = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '.mp3'
+    # trigger external recording
+    musicprocess = subprocess.Popen( " arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname,
+    stdin=subprocess.PIPE, shell=True )
 
 def upload():
     print "Stopping recording."
+    os.killpg(os.getpgid(musicprocess.pid), signal.SIGTERM)
     # trigger external uploading
     # will use userId and auth
 
