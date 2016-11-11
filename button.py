@@ -13,7 +13,7 @@ recording = False
 
 GPIO.setup(channel, GPIO.IN)
 print "Mewsician starting."
-global musicprocess
+musicprocess = None
 
 def record():
     print "Starting recording."
