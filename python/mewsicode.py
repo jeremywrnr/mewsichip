@@ -43,7 +43,7 @@ def record():
     mpid = psutil.Process(musicproc.pid)
     print(fname)
     print(mpid)
-    print("""  ...meow - edge detected!
+    print("""  ...meow, edge detected!
   |\      _,,,---,,_
   /,`.-'`'    -.  ;-;;,_
  |,4-  ) )-,_..;\ (  `'-'
@@ -72,8 +72,7 @@ def upload():
     print(subprocess.check_output(args))
 
     print("Cleaning up...")
-    # TODO - better to use the home folder than inside repo
-    subprocess.call(['mv', '-v', mname, os.getcwd() + "/../audio/"])
+    subprocess.call(['mv', '-v', mname, os.environ['HOME'] + "/audio/"])
     subprocess.call(['rm', '-v', fname])
     print("Complete.")
 

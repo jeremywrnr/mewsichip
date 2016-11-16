@@ -3,7 +3,7 @@
 # setup script for mewsician chip (mewsichip)
 
 # setting up CHIP python gpio library
-cd "$HOME" && sudo apt-get update
+cd "$HOME" && sudo apt-get update && mkdir audio
 sudo apt-get install git build-essential python-dev python-pip flex bison -y
 git clone https://github.com/atenart/dtc
 cd dtc && make && sudo make install PREFIX=/usr
