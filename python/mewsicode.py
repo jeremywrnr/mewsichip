@@ -5,6 +5,7 @@ from subprocess import PIPE
 from time import sleep
 import subprocess
 import datetime
+import psutil
 import signal
 import os
 
@@ -34,8 +35,14 @@ def record():
     print(fname)
     args = ['arecord', '-f', 'cd', '-D', 'hw:0,0', fname]
     musicproc = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)
-    mpid = musicproc.pid
+    mpid = psutil.Process(musicproc.pid)
     print('musicprocess pid is ', mpid)
+    print("""meow - edge detected.
+  |\      _,,,---,,_
+  /,`.-'`'    -.  ;-;;,_
+ |,4-  ) )-,_..;\ (  `'-'
+'---''(_/--'  `-'\_)
+        """)
 
 # trigger external uploading
 # will use userId and auth
@@ -44,6 +51,7 @@ def upload():
     print(fname)
     GPIO.output(outled, GPIO.HIGH)
     print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
+    # mpid.terminate()
     # os.killpg(mpid, signal.SIGTERM)
 
 def trigger():
@@ -56,12 +64,6 @@ def trigger():
         global recording
         recording = True
     sleep(3) # wait for debouncing 3 secs, bad.
-    print("""meow - edge detected.
-  |\      _,,,---,,_
-  /,`.-'`'    -.  ;-;;,_
- |,4-  ) )-,_..;\ (  `'-'
-'---''(_/--'  `-'\_)
-        """)
 
 while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
