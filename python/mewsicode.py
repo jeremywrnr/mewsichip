@@ -6,8 +6,6 @@ from time import sleep
 import subprocess
 import datetime
 import psutil
-import signal
-import os
 
 # TODO source authentication from device environment file
 # TODO mechanism for creation / uploading of these??????
@@ -45,14 +43,12 @@ def record():
         """)
 
 # trigger external uploading
-# will use userId and auth
+# will use authentication
 def upload():
     print("Stopping recording...")
-    print(fname)
     GPIO.output(outled, GPIO.HIGH)
-    print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
+    print('stop: musicprocess pid is ', mpid)
     # mpid.terminate()
-    # os.killpg(mpid, signal.SIGTERM)
 
 def trigger():
     if recording:
@@ -67,4 +63,4 @@ def trigger():
 
 while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
-        trigger() # why does this go off after three secs???
+        trigger()
