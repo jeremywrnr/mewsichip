@@ -50,6 +50,7 @@ def upload():
     GPIO.output(outled, GPIO.HIGH)
     print("Stopping recording...")
     mpid.terminate() # from record()
+    subprocess.call(['chown', fname, 'chip'])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
