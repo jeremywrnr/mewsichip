@@ -14,9 +14,9 @@ import os
 GPIO.cleanup()
 outled = "XIO-P1"
 channel = "XIO-P0"
-GPIO.setup(outled, GPIO.OUT)
-GPIO.output(outled, GPIO.LOW)
 GPIO.setup(channel, GPIO.IN)
+GPIO.setup(outled, GPIO.OUT)
+GPIO.output(outled, GPIO.HIGH)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
 recording = False
@@ -28,7 +28,7 @@ mpid = None
 def record():
     global fname, mpid
     print("Starting recording.")
-    GPIO.output(outled, GPIO.HIGH)
+    GPIO.output(outled, GPIO.LOW)
     fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
     print(fname)
     musicproc = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
@@ -39,7 +39,7 @@ def record():
 # will use userId and auth
 def upload():
     print "Stopping recording."
-    GPIO.output(outled, GPIO.LOW)
+    GPIO.output(outled, GPIO.HIGH)
     print 'stop: musicprocess pid is ', mpid
     # os.killpg(os.getpgid(mpid), signal.SIGTERM)
 
