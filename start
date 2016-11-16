@@ -1,3 +1,4 @@
 #!/bin/bash
-sudo ./script/unexport.sh
-sudo ./python/mewsicode.py
+
+sudo bash ./script/unexport.sh
+sudo python python/mewsicode.py
