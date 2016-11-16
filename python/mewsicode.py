@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# mewsician CHIP code.
 
 import CHIP_IO.GPIO as GPIO
 from time import sleep
@@ -7,19 +7,21 @@ import datetime
 import signal
 import os
 
-
 # TODO source authentication from device environment file
 # TODO mechanism for creation / uploading of these??????
+
 GPIO.cleanup()
-output = "XIO-P1"
+outled = "XIO-P1"
 channel = "XIO-P0"
-GPIO.setup(output, GPIO.OUT)
+GPIO.setup(outled, GPIO.OUT)
+GPIO.output(outled, GPIO.LOW)
 GPIO.setup(channel, GPIO.IN)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
 
 global mpid
 def record():
+    GPIO.output(outled, GPIO.HIGH)
     # trigger external recording and create a new subprocess for this
     print "Starting recording." # combine current time and uid
     fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
@@ -33,6 +35,7 @@ def upload(mpid):
     # will use userId and auth
     print "Stopping recording."
     print 'stop: musicprocess pid is ', mpid
+    GPIO.output(outled, GPIO.LOW)
     # os.killpg(os.getpgid(mpid), signal.SIGTERM)
 
 global recording
