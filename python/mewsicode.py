@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import CHIP_IO.GPIO as GPIO
 from time import sleep
 import subprocess
