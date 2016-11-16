@@ -5,6 +5,7 @@ from time import sleep
 import subprocess
 import datetime
 import psutil
+import sys
 import os
 
 # TODO source authentication from device environment file
@@ -20,6 +21,8 @@ GPIO.add_event_detect(channel, GPIO.RISING)
 
 print "\n<||||| - mewsician . starting - |||||>\n"
 
+# auth passed in from (../start)
+authentication = sys.argv[1]
 recording = False
 fname = None
 mpid = None
@@ -53,7 +56,7 @@ def upload():
     subprocess.call(['chown', fname, 'chip'])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
-    auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
+    auth = 'auth=' + authentication
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
     prog = subprocess.check_output(args)
     print("Status: ", prog)

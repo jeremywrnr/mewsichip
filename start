@@ -7,7 +7,5 @@ ps aux | grep record | head -n3 |\
 # free up any exported GPIOs
 sudo bash ./script/unexport.sh
 
-# expose chip authentication token and
-# beginning running mewsician, w/o warnings
-export MEWSICIAN_AUTH=$(cat chip.auth) &&
-sudo python -W ignore python/mewsicode.py
+# beginning running mewsician, w/o warnings, and pass in auth
+sudo python -W ignore python/mewsicode.py $(cat chip.auth)
