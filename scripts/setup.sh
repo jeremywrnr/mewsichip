@@ -11,12 +11,12 @@ cd .. && git clone git://github.com/xtacocorex/CHIP_IO.git
 cd CHIP_IO && sudo python setup.py install
 cd .. && sudo rm -rf CHIP_IO
 
+# clone mplayer defaut configuration and set it up
+wget -O input.conf https://raw.githubusercontent.com/williambelle/mplayer-config/master/input.conf
+mkdir -p "$HOME/.mplayer/" && mv input.conf "$HOME/.mplayer/"
+
 # TODO optimize this for the latest targeted firmware
 git clone https://github.com/jeremywrnr/mewsichip
 
 # share wifi connection chip details
 echo "for wifi run: mewsichip/connect.sh <ssid> <pass>"
-
-# clone mplayer defaut configuration and set it up
-wget -O input.conf https://raw.githubusercontent.com/williambelle/mplayer-config/master/input.conf
-mkdir -p "$HOME/.mplayer/" && mv input.conf "$HOME/.mplayer/"
