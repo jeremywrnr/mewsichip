@@ -68,7 +68,7 @@ def upload():
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
     print(subprocess.check_output(args))
     print("Cleaning up...")
-    subprocess.call(['mv', '-v', mname, os.getcwd() + "../audio/"])
+    subprocess.call(['mv', '-v', file, os.getcwd() + "/../audio/"])
     subprocess.call(['rm', '-v', fname])
     print("Complete.")
 
