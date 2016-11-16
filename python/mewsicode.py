@@ -19,12 +19,13 @@ GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
 GPIO.add_event_detect(channel, GPIO.RISING)
 
-print "\n<||||| - mewsician . starting - |||||>\n"
+print "\n<||||| - mewsician . commences - |||||>\n"
 
 # auth passed in from (../start)
 authentication = sys.argv[1]
 recording = False
 fname = None
+bname = None
 mpid = None
 
 # trigger external recording and create a new subprocess for this
@@ -33,8 +34,11 @@ def record():
     global fname, mpid
     print("Starting recording...")
     GPIO.output(outled, GPIO.LOW)
-    fname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S") + '.mp3'
-    args = ['arecord', '-f', 'cd', '-D', 'hw:0,0', fname]
+    bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
+    fname =  bname + '.wav'
+
+    # todo
+    args = ['arecord', '-f', 'cd', fname]
     musicproc = subprocess.Popen(args)
     mpid = psutil.Process(musicproc.pid)
     print(fname)
@@ -54,11 +58,12 @@ def upload():
     print("Stopping recording...")
     mpid.terminate() # from record()
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
+    subprocess.call(['lame', '-V2', fname, bname + "mp3"])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + authentication
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
-    # prog = subprocess.check_output(args)
+    # TODO figure out what is crashing here
     # prog = subprocess.check_output(args)
     # print("Status: ", prog)
 
