@@ -31,7 +31,7 @@ mpid = None
 # trigger external recording and create a new subprocess for this
 # combine current time and uid for the filename to be uploaded
 def record():
-    global fname, mpid
+    global fname, bname, mpid
     print("Starting recording...")
     GPIO.output(outled, GPIO.LOW)
     bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
