@@ -37,7 +37,7 @@ def record():
     bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
     fname =  bname + '.wav'
 
-    # todo
+    # TODO get this recording thing working
     args = ['arecord', '-f', 'cd', fname]
     musicproc = subprocess.Popen(args)
     mpid = psutil.Process(musicproc.pid)
@@ -57,17 +57,18 @@ def upload():
     GPIO.output(outled, GPIO.HIGH)
     print("Stopping recording...")
     mpid.terminate() # from record()
+    mname = bname + ".mp3"
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
-    subprocess.call(['lame', '-V2', fname, bname + ".mp3"])
-    subprocess.call(['sudo', 'chown', 'chip:chip', bname + ".mp3"])
+    subprocess.call(['lame', '-V2', fname, mname]) # convert
+    subprocess.call(['sudo', 'chown', 'chip:chip', mname])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + authentication
-    args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
     # TODO figure out what is crashing here
-    # prog = subprocess.check_output(args)
-    # print("Status: ", prog)
-    # TODO move to the audio folder
+    args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
+    prog = subprocess.check_output(args)
+    print("Status: ", prog)
+    # TODO move mp3 to the audio folder and clean up/remove wav file
 
 def trigger():
     if recording:
