@@ -51,7 +51,7 @@ def upload():
     print("Stopping recording...")
     mpid.terminate() # from record()
     print("Terminated. Uploading...")
-    file = 'file=@' + os.cwd() + fname
+    file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
     prog = subprocess.check_output(args)
