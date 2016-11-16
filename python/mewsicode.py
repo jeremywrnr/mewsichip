@@ -6,6 +6,7 @@ from time import sleep
 import subprocess
 import datetime
 import psutil
+import os
 
 # TODO source authentication from device environment file
 # TODO mechanism for creation / uploading of these??????
@@ -46,9 +47,15 @@ def record():
 # trigger external uploading
 # will use authentication
 def upload():
-    print("Stopping recording...")
     GPIO.output(outled, GPIO.HIGH)
-    mpid.terminate()
+    print("Stopping recording...")
+    mpid.terminate() # from record()
+    print("Terminated. Uploading...")
+    # file = 'file=@' + fname
+    # auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
+    # args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
+    # subprocess.call(args)
+
 
 def trigger():
     if recording:
