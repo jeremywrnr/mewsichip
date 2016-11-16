@@ -50,6 +50,10 @@ def trigger():
 
 while True: # continually in this state
     if GPIO.event_detected(channel):
-        print "MEOW! =＾ᵒ⋏ᵒ＾= "
-        print "edge detected."
+        print """ edge detected.
+  |\      _,,,---,,_
+  /,`.-'`'    -.  ;-;;,_
+ |,4-  ) )-,_..;\ (  `'-'  MEOW! 
+'---''(_/--'  `-'\_)
+        """
         trigger()
