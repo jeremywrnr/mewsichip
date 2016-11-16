@@ -6,8 +6,8 @@ Embedded code for the CHIP for the mewsician project.
 
 ### resources
 
-- [chip gpio diagram](http://docs.getchip.com/images/chip_pinouts.jpg)
-- [headphone jack](http://www.cablechick.com.au/resources/image/trrs-diagram2.jpg)
+- [chip gpio documentation](http://docs.getchip.com/chip.html#physical-connectors)
+- [headphone jack diagram](http://www.cablechick.com.au/resources/image/trrs-diagram2.jpg)
 - [mewsician repo](https://github.com/radiolarian/mewsician)
 
 
