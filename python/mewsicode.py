@@ -64,11 +64,12 @@ def upload():
     subprocess.call(['sudo', 'chown', 'chip:chip', mname])
     print("Uploading music...")
     auth = 'auth=' + authentication # upload
-    file = 'file=@' + os.getcwd() + '/' + mname
-    args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
+    path =  os.getcwd() + '/' + mname
+    upload = 'file=@' + path
+    args = ['curl', '--form', upload, '--form', auth, 'http://mewsician.win/upload']
     print(subprocess.check_output(args))
     print("Cleaning up...")
-    subprocess.call(['mv', '-v', file, os.getcwd() + "/../audio/"])
+    subprocess.call(['mv', '-v', path, os.getcwd() + "/../audio/"])
     subprocess.call(['rm', '-v', fname])
     print("Complete.")
 
