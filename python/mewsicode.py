@@ -1,6 +1,7 @@
 # mewsician CHIP code.
 
 import CHIP_IO.GPIO as GPIO
+from subprocess import PIPE
 from time import sleep
 import subprocess
 import datetime
@@ -19,28 +20,36 @@ GPIO.setup(channel, GPIO.IN)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
 recording = False
-global mpid
+fname = None
+mpid = None
 
+# trigger external recording and create a new subprocess for this
+# combine current time and uid for the filename to be uploaded
 def record():
-    print "Starting recording."
+    global fname, mpid
+    print("Starting recording.")
     GPIO.output(outled, GPIO.HIGH)
-    # trigger external recording and create a new subprocess for this
-    # cmd = "arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname
-    # mpid = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
-    # combine current time and uid
-    # fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
-    # print 'musicprocess pid is ', musicprocess.pid
-    # return (musicprocess.pid,  fname)
+    fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
+    print(fname)
+    musicproc = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
+    mpid = musicproc.pid
+    print('musicprocess pid is ', mpid)
 
+# trigger external uploading
+# will use userId and auth
 def upload():
     print "Stopping recording."
     GPIO.output(outled, GPIO.LOW)
-    # trigger external uploading
-    # will use userId and auth
-    # print 'stop: musicprocess pid is ', mpid
+    print 'stop: musicprocess pid is ', mpid
     # os.killpg(os.getpgid(mpid), signal.SIGTERM)
 
 def trigger():
+    print("""meow - edge detected.
+  |\      _,,,---,,_
+  /,`.-'`'    -.  ;-;;,_
+ |,4-  ) )-,_..;\ (  `'-'
+'---''(_/--'  `-'\_)
+        """)
     if recording:
         upload()
         global recording
@@ -53,10 +62,4 @@ def trigger():
 
 while True: # continually in this state
     if GPIO.event_detected(channel):
-        print """ edge detected.
-  |\      _,,,---,,_
-  /,`.-'`'    -.  ;-;;,_
- |,4-  ) )-,_..;\ (  `'-'  MEOW!
-'---''(_/--'  `-'\_)
-        """
         trigger()
