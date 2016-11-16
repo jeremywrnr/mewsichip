@@ -1,7 +1,6 @@
-# mewsician CHIP code.
+# mewsician CHIP code, by team goacat.
 
 import CHIP_IO.GPIO as GPIO
-from subprocess import PIPE
 from time import sleep
 import subprocess
 import datetime
@@ -19,7 +18,8 @@ GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
 GPIO.add_event_detect(channel, GPIO.RISING)
 
-print "||||| mewsician starting |||||"
+print "<||||| - mewsician - starting - |||||>"
+
 recording = False
 fname = None
 mpid = None
@@ -55,6 +55,7 @@ def upload():
     # auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
     # args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
     # subprocess.call(args)
+    print("Complete.")
 
 
 def trigger():
@@ -62,7 +63,7 @@ def trigger():
         upload()
         global recording
         recording = False
-    else:
+    else: # start recording
         record()
         global recording
         recording = True
@@ -70,4 +71,4 @@ def trigger():
 
 while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
-        trigger()
+        trigger() # on button press

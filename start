@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# kill off any remainging audio processes
+# kill any remaining audio procs
 ps aux | grep record | head -n3 |\
     awk '{ print $2 }' | xargs -L 1 sudo kill
 
