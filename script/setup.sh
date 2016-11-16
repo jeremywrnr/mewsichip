@@ -10,6 +10,7 @@ cd dtc && make && sudo make install PREFIX=/usr
 cd .. && git clone git://github.com/xtacocorex/CHIP_IO.git
 cd CHIP_IO && sudo python setup.py install
 cd .. && sudo rm -rf CHIP_IO
+sudo pip install psutil
 
 # clone mplayer defaut configuration and set it up
 wget -O input.conf https://raw.githubusercontent.com/williambelle/mplayer-config/master/input.conf
