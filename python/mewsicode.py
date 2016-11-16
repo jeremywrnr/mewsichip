@@ -58,18 +58,22 @@ def upload():
     print("Stopping recording...")
     mpid.terminate() # from record()
     mname = bname + ".mp3"
+
     print("Compressing audio...")
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
     subprocess.call(['lame', '-V2', fname, mname]) # convert
     subprocess.call(['sudo', 'chown', 'chip:chip', mname])
+
     print("Uploading music...")
     auth = 'auth=' + authentication # upload
     path =  os.getcwd() + '/' + mname
     upload = 'file=@' + path
     args = ['curl', '--form', upload, '--form', auth, 'http://mewsician.win/upload']
     print(subprocess.check_output(args))
+
     print("Cleaning up...")
-    subprocess.call(['mv', '-v', path, os.getcwd() + "/../audio/"])
+    # TODO - better to use the home folder than inside repo
+    subprocess.call(['mv', '-v', mname, os.getcwd() + "/../audio/"])
     subprocess.call(['rm', '-v', fname])
     print("Complete.")
 
