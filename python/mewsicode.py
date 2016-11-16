@@ -24,10 +24,10 @@ recording = False
 def record():
     GPIO.output(outled, GPIO.HIGH)
     # trigger external recording and create a new subprocess for this
+    # cmd = "arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname
+    # mpid = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
     print "Starting recording." # combine current time and uid
     fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
-    cmd = "arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname
-    mpid = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
     print 'musicprocess pid is ', musicprocess.pid
     return (musicprocess.pid,  fname)
 
