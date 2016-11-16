@@ -59,7 +59,7 @@ def upload():
     mpid.terminate() # from record()
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
     subprocess.call(['lame', '-V2', fname, bname + ".mp3"])
-    subprocess.call(['sudo', 'chown', 'chip:chip', bname])
+    subprocess.call(['sudo', 'chown', 'chip:chip', bname + ".mp3"])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + authentication
