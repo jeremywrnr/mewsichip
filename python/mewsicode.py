@@ -32,7 +32,7 @@ def record():
     GPIO.output(outled, GPIO.LOW)
     fname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S") + '.mp3'
     args = ['arecord', '-f', 'cd', '-D', 'hw:0,0', fname]
-    musicproc = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)
+    musicproc = subprocess.Popen(args)
     mpid = psutil.Process(musicproc.pid)
     print(fname)
     print(mpid)
