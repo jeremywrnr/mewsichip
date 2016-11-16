@@ -13,13 +13,14 @@ import os
 GPIO.cleanup()
 outled = "XIO-P1"
 channel = "XIO-P0"
+global recording = false
 GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.LOW)
 GPIO.setup(channel, GPIO.IN)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
-
 global mpid
+
 def record():
     GPIO.output(outled, GPIO.HIGH)
     # trigger external recording and create a new subprocess for this
@@ -38,7 +39,6 @@ def upload(mpid):
     GPIO.output(outled, GPIO.LOW)
     # os.killpg(os.getpgid(mpid), signal.SIGTERM)
 
-global recording
 def trigger():
     if recording:
         upload(mpid)
@@ -53,7 +53,7 @@ while True: # continually in this state
         print """ edge detected.
   |\      _,,,---,,_
   /,`.-'`'    -.  ;-;;,_
- |,4-  ) )-,_..;\ (  `'-'  MEOW! 
+ |,4-  ) )-,_..;\ (  `'-'  MEOW!
 '---''(_/--'  `-'\_)
         """
         trigger()
