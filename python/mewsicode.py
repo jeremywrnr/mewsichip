@@ -18,7 +18,7 @@ GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
 GPIO.add_event_detect(channel, GPIO.RISING)
 
-print "<||||| - mewsician - starting - |||||>"
+print "\n<||||| - mewsician . starting - |||||>\n"
 
 recording = False
 fname = None
@@ -41,7 +41,7 @@ def record():
   /,`.-'`'    -.  ;-;;,_
  |,4-  ) )-,_..;\ (  `'-'
 '---''(_/--'  `-'\_)
-        """)
+        """) # =^_^=
 
 # stop current recording
 # trigger external uploading
@@ -51,12 +51,11 @@ def upload():
     print("Stopping recording...")
     mpid.terminate() # from record()
     print("Terminated. Uploading...")
-    # file = 'file=@' + fname
-    # auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
-    # args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
-    # subprocess.call(args)
-    print("Complete.")
-
+    file = 'file=@' + os.cwd() + fname
+    auth = 'auth=' + os.environ["MEWSICIAN_AUTH"]
+    args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
+    prog = subprocess.check_output(args)
+    print("Status: ", prog)
 
 def trigger():
     if recording:
@@ -67,8 +66,8 @@ def trigger():
         record()
         global recording
         recording = True
-    sleep(3) # wait for debouncing 3 secs, bad.
+    sleep(3) # wait 3 secs for debouncing, bad but works.
 
 while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
-        trigger() # on button press
+        trigger() # on button press, trigger callback
