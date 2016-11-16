@@ -30,11 +30,11 @@ def record():
     print("Starting recording...")
     GPIO.output(outled, GPIO.LOW)
     fname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S") + '.mp3'
-    print(fname)
     args = ['arecord', '-f', 'cd', '-D', 'hw:0,0', fname]
     musicproc = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)
     mpid = psutil.Process(musicproc.pid)
-    print('musicprocess pid is ', mpid)
+    print(fname)
+    print(mpid)
     print("""meow - edge detected.
   |\      _,,,---,,_
   /,`.-'`'    -.  ;-;;,_
@@ -48,7 +48,6 @@ def record():
 def upload():
     print("Stopping recording...")
     GPIO.output(outled, GPIO.HIGH)
-    print('stop: musicprocess pid is ', mpid)
     mpid.terminate()
 
 def trigger():
