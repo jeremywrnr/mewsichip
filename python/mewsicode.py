@@ -58,7 +58,8 @@ def upload():
     print("Stopping recording...")
     mpid.terminate() # from record()
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
-    subprocess.call(['lame', '-V2', fname, bname + "mp3"])
+    subprocess.call(['lame', '-V2', fname, bname + ".mp3"])
+    subprocess.call(['sudo', 'chown', 'chip:chip', bname])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + authentication
@@ -66,6 +67,7 @@ def upload():
     # TODO figure out what is crashing here
     # prog = subprocess.check_output(args)
     # print("Status: ", prog)
+    # TODO move to the audio folder
 
 def trigger():
     if recording:
