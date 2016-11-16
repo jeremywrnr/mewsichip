@@ -18,37 +18,38 @@ GPIO.output(outled, GPIO.LOW)
 GPIO.setup(channel, GPIO.IN)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
-global recording, mpid
 recording = False
+global mpid
 
 def record():
+    print "Starting recording."
     GPIO.output(outled, GPIO.HIGH)
     # trigger external recording and create a new subprocess for this
     # cmd = "arecord -f cd -D hw:0,0 -t raw | lame -x -r - - > " + fname
     # mpid = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
-    print "Starting recording." # combine current time and uid
-    fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
-    print 'musicprocess pid is ', musicprocess.pid
-    return (musicprocess.pid,  fname)
+    # combine current time and uid
+    # fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
+    # print 'musicprocess pid is ', musicprocess.pid
+    # return (musicprocess.pid,  fname)
 
-def upload(mpid):
+def upload():
+    print "Stopping recording."
+    GPIO.output(outled, GPIO.LOW)
     # trigger external uploading
     # will use userId and auth
-    print "Stopping recording."
-    print 'stop: musicprocess pid is ', mpid
-    GPIO.output(outled, GPIO.LOW)
+    # print 'stop: musicprocess pid is ', mpid
     # os.killpg(os.getpgid(mpid), signal.SIGTERM)
 
 def trigger():
     if recording:
-        upload(mpid)
+        upload()
         global recording
         recording = False
     else:
-        mpid = record()
+        record()
         global recording
         recording = True
-        sleep(3) # wait for debouncing 3 secs, bad.
+    sleep(3) # wait for debouncing 3 secs, bad.
 
 while True: # continually in this state
     if GPIO.event_detected(channel):
