@@ -11,6 +11,7 @@ Embedded code for the CHIP for the mewsician project.
 ### resources
 
 - [chip gpio documentation](http://docs.getchip.com/chip.html#physical-connectors)
+- [adafruit headphone schematic](https://cdn-shop.adafruit.com/product-files/1699/STX3120.pdf)
 - [headphone jack diagram](http://www.cablechick.com.au/resources/image/trrs-diagram2.jpg)
 - [mewsician repo](https://github.com/radiolarian/mewsician)
 
