@@ -18,6 +18,7 @@ GPIO.setup(channel, GPIO.IN)
 GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
 GPIO.add_event_detect(channel, GPIO.RISING)
+
 print "Mewsician starting."
 recording = False
 fname = None
@@ -31,7 +32,8 @@ def record():
     GPIO.output(outled, GPIO.LOW)
     fname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S") + '.mp3'
     print(fname)
-    musicproc = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
+    args = ['arecord', '-f', 'cd', '-D', 'hw:0,0', fname]
+    musicproc = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)
     mpid = musicproc.pid
     print('musicprocess pid is ', mpid)
 
@@ -39,6 +41,7 @@ def record():
 # will use userId and auth
 def upload():
     print("Stopping recording...")
+    print(fname)
     GPIO.output(outled, GPIO.HIGH)
     print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
     # os.killpg(mpid, signal.SIGTERM)
@@ -62,4 +65,4 @@ def trigger():
 
 while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
-        trigger()
+        trigger() # why does this go off after three secs???
