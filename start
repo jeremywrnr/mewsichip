@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# expose chip authentication token
-export MEWSICIAN_AUTH=$(cat chip.auth)
+# expose chip authentication token (sudo?)
+sudo export MEWSICIAN_AUTH=$(cat chip.auth)
 
 # kill any remaining audio procs
 ps aux | grep record | head -n3 |\
@@ -11,4 +11,4 @@ ps aux | grep record | head -n3 |\
 sudo bash ./script/unexport.sh
 
 # beginning running mewsician, w/o warnings
-sudo python -W ignore  python/mewsicode.py
+sudo python -W ignore python/mewsicode.py
