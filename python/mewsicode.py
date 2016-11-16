@@ -29,7 +29,7 @@ def record():
     global fname, mpid
     print("Starting recording.")
     GPIO.output(outled, GPIO.LOW)
-    fname = datetime.datetime.now().strftime("%Y-%m-%d@%H-%M-%S") + '.mp3'
+    fname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S") + '.mp3'
     print(fname)
     musicproc = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
     mpid = musicproc.pid
@@ -40,16 +40,10 @@ def record():
 def upload():
     print("Stopping recording.")
     GPIO.output(outled, GPIO.HIGH)
-    print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
-    # os.killpg(mpid, signal.SIGTERM)
+    os.killpg(mpid, signal.SIGTERM)
+    # print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
 
 def trigger():
-    print("""meow - edge detected.
-  |\      _,,,---,,_
-  /,`.-'`'    -.  ;-;;,_
- |,4-  ) )-,_..;\ (  `'-'
-'---''(_/--'  `-'\_)
-        """)
     if recording:
         upload()
         global recording
@@ -59,6 +53,12 @@ def trigger():
         global recording
         recording = True
     sleep(3) # wait for debouncing 3 secs, bad.
+    print("""meow - edge detected.
+  |\      _,,,---,,_
+  /,`.-'`'    -.  ;-;;,_
+ |,4-  ) )-,_..;\ (  `'-'
+'---''(_/--'  `-'\_)
+        """)
 
 while True: # continually in this state
     if GPIO.event_detected(channel):
