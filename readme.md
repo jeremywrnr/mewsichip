@@ -1,5 +1,5 @@
-mewsichip :cat2:
-================
+[mewsichip](http://mewsician.win) :cat2:
+========================================
 
 Embedded code for the CHIP for the mewsician project.
 
