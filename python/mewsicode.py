@@ -18,8 +18,8 @@ GPIO.output(outled, GPIO.LOW)
 GPIO.setup(channel, GPIO.IN)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
+global recording, mpid
 recording = false
-global mpid
 
 def record():
     GPIO.output(outled, GPIO.HIGH)
