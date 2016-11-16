@@ -1,4 +1,3 @@
-start:
-	sudo script/unexport.sh
-	sudo python/mewsicode.py
-.PHONY: start
+#!/bin/bash
+sudo script/unexport.sh
+sudo python/mewsicode.py
