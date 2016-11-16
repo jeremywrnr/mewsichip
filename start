@@ -1,4 +1,11 @@
 #!/bin/bash
 
+# kill off any remainging audio processes
+ps aux | grep record | head -n3 |\
+    awk '{ print $2 }' | xargs -L 1 sudo kill
+
+# free up any exported GPIOs
 sudo bash ./script/unexport.sh
+
+# beginning running mewsician
 sudo python python/mewsicode.py
