@@ -63,7 +63,7 @@ def upload():
     subprocess.call(['sudo', 'chown', 'chip:chip', mname])
     print("Terminated. Uploading...")
     auth = 'auth=' + authentication
-    file = 'file=@' + os.getcwd() + '/' + mname replace(" ", "\ ").replace("@", "\@")
+    file = 'file=@' + os.getcwd() + '/' + mname.replace(" ", "\ ").replace("@", "\@")
     # TODO figure out what is crashing here
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
     prog = subprocess.check_output(args)
