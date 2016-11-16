@@ -20,10 +20,10 @@ while True:
             fname = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             musicprocess = subprocess.Popen(['arecord', '-f', 'cd', '-D', 'hw:0,0', fname], stdout=PIPE, stderr=PIPE)
             print 'recording track'
-	    is_playing = True
+            is_playing = True
         else:
             os.killpg(os.getpgid(musicprocess.pid), signal.SIGTERM)
             is_playing = False
-    sleep(3)
-GPIO.cleanup()
+        sleep(3)
 
+GPIO.cleanup()

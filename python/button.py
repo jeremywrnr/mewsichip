@@ -9,6 +9,7 @@ import datetime
 # - meteor userId
 # - authentication
 channel = "XIO-P0"
+output = "XIO-P1"
 recording = False
 mpid = None
 
