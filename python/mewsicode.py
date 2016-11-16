@@ -58,8 +58,9 @@ def upload():
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + authentication
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
-    prog = subprocess.check_output(args)
-    print("Status: ", prog)
+    # prog = subprocess.check_output(args)
+    # prog = subprocess.check_output(args)
+    # print("Status: ", prog)
 
 def trigger():
     if recording:
