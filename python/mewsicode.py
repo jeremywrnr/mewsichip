@@ -38,10 +38,10 @@ def record():
 # trigger external uploading
 # will use userId and auth
 def upload():
-    print "Stopping recording."
+    print("Stopping recording.")
     GPIO.output(outled, GPIO.HIGH)
-    print 'stop: musicprocess pid is ', mpid
-    # os.killpg(os.getpgid(mpid), signal.SIGTERM)
+    print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
+    # os.killpg(mpid, signal.SIGTERM)
 
 def trigger():
     print("""meow - edge detected.
