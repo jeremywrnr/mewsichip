@@ -40,8 +40,8 @@ def record():
 def upload():
     print("Stopping recording.")
     GPIO.output(outled, GPIO.HIGH)
-    os.killpg(mpid, signal.SIGTERM)
-    # print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
+    print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
+    # os.killpg(mpid, signal.SIGTERM)
 
 def trigger():
     if recording:
