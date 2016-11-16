@@ -4,6 +4,10 @@
 Embedded code for the CHIP for the mewsician project.
 
 
+### new chip
+
+    curl https://raw.githubusercontent.com/jeremywrnr/mewsichip/master/script/mewsetup.sh | bash
+
 ### resources
 
 - [chip gpio documentation](http://docs.getchip.com/chip.html#physical-connectors)
