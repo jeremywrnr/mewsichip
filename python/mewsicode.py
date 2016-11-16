@@ -53,7 +53,7 @@ def upload():
     GPIO.output(outled, GPIO.HIGH)
     print("Stopping recording...")
     mpid.terminate() # from record()
-    subprocess.call(['chown', 'chip', fname])
+    subprocess.call(['sudo', 'chown', 'chip:chip', fname])
     print("Terminated. Uploading...")
     file = 'file=@' + os.getcwd() + fname
     auth = 'auth=' + authentication
