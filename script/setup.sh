@@ -16,6 +16,10 @@ sudo pip install psutil
 wget -O input.conf https://raw.githubusercontent.com/williambelle/mplayer-config/master/input.conf
 mkdir -p "$HOME/.mplayer/" && mv input.conf "$HOME/.mplayer/"
 
+# hacky time update from the scourges of the internt
+# https://askubuntu.com/questions/81293/what-is-the-command-to-update-time-and-date-from-internet
+sudo date -s "$(wget -qSO- --max-redirect=0 google.com 2>&1 | grep Date: | cut -d' ' -f5-8)Z"
+
 # TODO optimize this for the latest targeted firmware
 git clone https://github.com/jeremywrnr/mewsichip
 

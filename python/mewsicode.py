@@ -58,17 +58,19 @@ def upload():
     print("Stopping recording...")
     mpid.terminate() # from record()
     mname = bname + ".mp3"
+    print("Compressing audio...")
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
     subprocess.call(['lame', '-V2', fname, mname]) # convert
     subprocess.call(['sudo', 'chown', 'chip:chip', mname])
-    print("Terminated. Uploading...")
-    auth = 'auth=' + authentication
-    # TODO figure out what is crashing here
+    print("Uploading music...")
+    auth = 'auth=' + authentication # upload
     file = 'file=@' + os.getcwd() + '/' + mname
     args = ['curl', '--form', file, '--form', auth, 'http://mewsician.win/upload']
-    prog = subprocess.check_output(args)
-    print("Status: ", prog)
-    # TODO move mp3 to the audio folder and clean up/remove wav file
+    print(subprocess.check_output(args))
+    print("Cleaning up...")
+    subprocess.call(['mv', '-v', mname, "../audio/"])
+    subprocess.call(['rm', '-v', fname])
+    print("Complete.")
 
 def trigger():
     if recording:
