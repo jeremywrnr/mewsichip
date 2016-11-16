@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# expose chip authentication token (sudo?)
-sudo export MEWSICIAN_AUTH=$(cat chip.auth)
-
 # kill any remaining audio procs
 ps aux | grep record | head -n3 |\
     awk '{ print $2 }' | xargs -L 1 sudo kill
@@ -10,5 +7,7 @@ ps aux | grep record | head -n3 |\
 # free up any exported GPIOs
 sudo bash ./script/unexport.sh
 
+# expose chip authentication token and
 # beginning running mewsician, w/o warnings
+export MEWSICIAN_AUTH=$(cat chip.auth) &&
 sudo python -W ignore python/mewsicode.py
