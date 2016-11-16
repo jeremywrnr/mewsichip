@@ -27,7 +27,7 @@ mpid = None
 # combine current time and uid for the filename to be uploaded
 def record():
     global fname, mpid
-    print("Starting recording.")
+    print("Starting recording...")
     GPIO.output(outled, GPIO.LOW)
     fname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S") + '.mp3'
     print(fname)
@@ -38,7 +38,7 @@ def record():
 # trigger external uploading
 # will use userId and auth
 def upload():
-    print("Stopping recording.")
+    print("Stopping recording...")
     GPIO.output(outled, GPIO.HIGH)
     print('stop: musicprocess pid is ', mpid, os.getpgid(mpid))
     # os.killpg(mpid, signal.SIGTERM)
@@ -60,6 +60,6 @@ def trigger():
 '---''(_/--'  `-'\_)
         """)
 
-while True: # continually in this state
-    if GPIO.event_detected(channel):
+while True: # continually in this state, check if channel HI
+    if GPIO.event_detected(channel) and GPIO.input(channel):
         trigger()
