@@ -13,12 +13,12 @@ import os
 GPIO.cleanup()
 outled = "XIO-P1"
 channel = "XIO-P0"
-global recording = false
 GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.LOW)
 GPIO.setup(channel, GPIO.IN)
 GPIO.add_event_detect(channel, GPIO.RISING)
 print "Mewsician starting."
+recording = false
 global mpid
 
 def record():
@@ -42,9 +42,11 @@ def upload(mpid):
 def trigger():
     if recording:
         upload(mpid)
+        global recording
         recording = False
     else:
         mpid = record()
+        global recording
         recording = True
         sleep(3) # wait for debouncing 3 secs, bad.
 
