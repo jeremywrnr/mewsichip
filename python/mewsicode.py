@@ -72,7 +72,8 @@ def upload():
     print(subprocess.check_output(args))
 
     print("Cleaning up...")
-    subprocess.call(['mv', '-v', mname, os.environ['HOME'] + "/audio/"])
+    # subprocess.call(['mv', '-v', mname, os.environ['HOME'] + "/audio/"])
+    subprocess.call(['mv', '-v', mname, "../audio/"])
     subprocess.call(['rm', '-v', fname])
     print("Complete.")
 
