@@ -18,7 +18,7 @@ GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
 GPIO.add_event_detect(channel, GPIO.RISING)
 
-print "Mewsician starting."
+print "||||| mewsician starting |||||"
 recording = False
 fname = None
 mpid = None
@@ -42,13 +42,14 @@ def record():
 '---''(_/--'  `-'\_)
         """)
 
+# stop current recording
 # trigger external uploading
 # will use authentication
 def upload():
     print("Stopping recording...")
     GPIO.output(outled, GPIO.HIGH)
     print('stop: musicprocess pid is ', mpid)
-    # mpid.terminate()
+    mpid.terminate()
 
 def trigger():
     if recording:
