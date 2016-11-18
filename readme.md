@@ -4,7 +4,7 @@
 Embedded code for the CHIP for the mewsician project.
 
 
-### new chip
+### setup new chip
 
     curl https://raw.githubusercontent.com/jeremywrnr/mewsichip/master/script/mewsetup.sh | bash
 
@@ -38,3 +38,7 @@ setup ssh agent
 
     sudo apt-get install avahi-daemon
 
+
+### demo videos
+
+[![hardware prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
