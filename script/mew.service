@@ -1,5 +1,5 @@
 [Unit]
-Description=mewsician - mewsichip
+Description=mewsichip
 After=default.target
 
 [Service]
