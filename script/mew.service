@@ -1,0 +1,10 @@
+[Unit]
+Description=mewsician - mewsichip
+After=default.target
+
+[Service]
+Type=forking
+ExecStart=/usr/chip/mewsician/start
+
+[Install]
+WantedBy=default.target
