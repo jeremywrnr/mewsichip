@@ -113,6 +113,7 @@ def trigger():
     sleep(3) # wait 3 secs for debouncing, bad but works.
 
 
+startup() # setting up code to initialize the board/uploads
 while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
         trigger() # on button press, trigger callback
