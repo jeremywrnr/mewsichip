@@ -3,7 +3,7 @@ Description=mewsician - mewsichip
 After=default.target
 
 [Service]
-ExecStart=/home/chip/mewsician/start
+ExecStart=/home/chip/mewsichip/start
 Type=forking
 
 [Install]

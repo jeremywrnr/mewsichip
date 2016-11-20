@@ -52,7 +52,7 @@ def record():
 # will use authentication
 def upload():
     GPIO.output(outled, GPIO.HIGH)
-    print("Stopping recording...")
+    print("\nStopping recording...")
     mpid.terminate() # from record()
     mname = bname + ".mp3"
 
