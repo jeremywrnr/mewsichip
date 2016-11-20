@@ -69,8 +69,9 @@ def upload():
     print(subprocess.check_output(args))
 
     print("Cleaning up...")
+    # doesn't seem to recognize the home environment
     # subprocess.call(['mv', '-v', mname, os.environ['HOME'] + "/audio/"])
-    subprocess.call(['mv', '-v', mname, "../audio/"])
+    subprocess.call(['mv', '-v', mname, "/home/chip/audio/"])
     subprocess.call(['rm', '-v', fname])
     print("Complete.")
 
