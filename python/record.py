@@ -1,4 +1,5 @@
 # https://stackoverflow.com/questions/6867675/audio-recording-in-python
+# visual recording interface, show amplitude whilst recording.
 
 import alsaaudio, wave, numpy
 

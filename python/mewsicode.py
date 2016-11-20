@@ -8,9 +8,6 @@ import psutil
 import sys
 import os
 
-# TODO source authentication from device environment file
-# TODO mechanism for creation / uploading of these??????
-
 GPIO.cleanup()
 outled = "XIO-P1"
 channel = "XIO-P0"
@@ -37,7 +34,7 @@ def record():
     bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
     fname =  bname + '.wav'
 
-    # TODO get this recording thing working
+    # starting the recording
     args = ['arecord', '-f', 'cd', fname]
     musicproc = subprocess.Popen(args)
     mpid = psutil.Process(musicproc.pid)
