@@ -39,7 +39,7 @@ def startup():
     except: # no uploads || !file exists yet || upload err
         args = ['touch', queue]
         subprocess.Popen(args)
-        print(e)
+        print sys.exc_info()[0]
 
 
 # trigger external recording and create a new subprocess for this
