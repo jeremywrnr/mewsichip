@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # kill any remaining audio procs
-ps aux | grep record | head -n3 |\
-    awk '{ print $2 }' | xargs -L 1 sudo kill
+ps aux | grep record | head -n3 | awk '{ print $2 }' | xargs -L 1 sudo kill
 
 # getting the current working directory
 # https://stackoverflow.com/questions/59895
@@ -12,5 +11,4 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sudo bash "$DIR/script/unexport.sh"
 
 # beginning running mewsician, w/o warnings, and pass in auth
-sudo python -W ignore \
-    "$DIR/python/mewsicode.py" $(cat chip.auth)
+sudo python -W ignore "$DIR/python/mewsicode.py" $(cat "$DIR/chip.auth")
