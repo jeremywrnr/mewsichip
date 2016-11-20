@@ -7,6 +7,7 @@ import datetime
 import psutil
 import sys
 import os
+import serial
 
 GPIO.cleanup()
 outled = "XIO-P1"
@@ -108,6 +109,7 @@ def trigger():
         upload()
         recording = False
     else: # start recording
+        send_serial('l')
         record()
         recording = True
     sleep(3) # wait 3 secs for debouncing, bad but works.
@@ -118,3 +120,7 @@ while True: # continually in this state, check if channel HI
     if GPIO.event_detected(channel) and GPIO.input(channel):
         trigger() # on button press, trigger callback
 
+def send_serial(ch):
+    # d, l, s, c
+    with serial.Serial('comport') as ser:
+        ser.write(ch)
