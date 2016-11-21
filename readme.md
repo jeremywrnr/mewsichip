@@ -8,12 +8,15 @@ Embedded code for the CHIP for the mewsician project.
 
     curl https://raw.githubusercontent.com/jeremywrnr/mewsichip/master/script/mewsetup.sh | bash
 
+
 ### resources
 
+- [mewsician website](http://mewsician.win)
+- [mewsician github repo](https://github.com/radiolarian/mewsician)
 - [chip gpio documentation](http://docs.getchip.com/chip.html#physical-connectors)
 - [adafruit headphone schematic](https://cdn-shop.adafruit.com/product-files/1699/STX3120.pdf)
+- [systemd CHIP setup help](https://github.com/fordsfords/blink)
 - [headphone jack diagram](http://www.cablechick.com.au/resources/image/trrs-diagram2.jpg)
-- [mewsician repo](https://github.com/radiolarian/mewsician)
 
 
 ### commands
@@ -42,3 +45,5 @@ setup ssh agent
 ### demo videos
 
 [![hardware prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
+
+[![alpha prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
