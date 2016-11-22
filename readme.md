@@ -41,9 +41,17 @@ setup ssh agent
 
     sudo apt-get install avahi-daemon
 
+restart mew service
+
+    sudo systemctl restart mew
+
 
 ### demo videos
 
-[![hardware prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
+alpha workflow
 
-[![alpha prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
+[![alpha prototype demo video](http://img.youtube.com/vi/-4KjWFd3zv4/0.jpg)](http://www.youtube.com/watch?v=-4KjWFd3zv4)
+
+hardware / server link
+
+[![hardware prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
