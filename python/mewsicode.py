@@ -11,11 +11,20 @@ import serial
 
 GPIO.cleanup()
 outled = "XIO-P1"
-channel = "XIO-P0"
-GPIO.setup(channel, GPIO.IN)
+record_channel = "XIO-P0"
+listen_channel = "XIO-P3"
+sing_channel = "XIO-P2"
+
+GPIO.setup(record_channel, GPIO.IN)
+GPIO.setup(listen_channel, GPIO.IN)
+GPIO.setup(sing_channel, GPIO.IN)
+
 GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
-GPIO.add_event_detect(channel, GPIO.RISING)
+
+GPIO.add_event_detect(record_channel, GPIO.RISING)
+GPIO.add_event_detect(listen_channel, GPIO.RISING)
+GPIO.add_event_detect(sing_channel, GPIO.RISING)
 
 
 # hardcoded file locations
@@ -26,9 +35,21 @@ queue = audioLoc + "queue"
 # auth passed in from (../start)
 authentication = sys.argv[1]
 recording = False
+listening = False
+singing = False
 fname = None
 bname = None
 mpid = None
+play_pid = None
+playback_fname = "/home/chip/audio/test.mp3"
+
+# trigger playback of audio file
+def playback():
+    global play_pid
+    print("Starting playback...")
+    args = ['mpg123', playback_fname]
+    playproc = subprocess.Popen(args)
+    play_pid = psutil.Process(playproc.pid)
 
 
 # code that runs once when the script is starting.
@@ -49,6 +70,7 @@ def record():
     global fname, bname, mpid
     print("Starting recording...")
     GPIO.output(outled, GPIO.LOW)
+
     bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
     fname =  bname + '.wav'
 
@@ -80,6 +102,9 @@ def upload():
     mpid.terminate() # from record()
     mname = bname + ".mp3"
 
+    # stopped recording, update arduino lights
+    send_serial('u')
+
     print("Compressing audio...")
     subprocess.call(['sudo', 'chown', 'chip:chip', fname])
     subprocess.call(['lame', '-V2', fname, mname]) # convert
@@ -102,25 +127,162 @@ def upload():
             q.write(mname)
         print(e.output)
 
-
-def trigger():
-    global recording
+def trigger_record():
     if recording:
-        upload()
-        recording = False
-    else: # start recording
-        send_serial('l')
-        record()
-        recording = True
-    sleep(3) # wait 3 secs for debouncing, bad but works.
+        end_recording()
+        send_serial('d')
+    else:
+        start_recording()
 
+def start_recording():
+    global recording
+    global listening
+    global singing
+    recording = True
+    listening = False
+    singing = False
 
-startup() # setting up code to initialize the board/uploads
-while True: # continually in this state, check if channel HI
-    if GPIO.event_detected(channel) and GPIO.input(channel):
-        trigger() # on button press, trigger callback
+    global hunger
+    hunger = 0
+
+    write_time_to_file()
+
+    send_serial('r')
+    record()
+
+def end_recording():
+    send_serial('e')
+    upload()
+    global recording
+    recording = False
+
+def write_time_to_file():
+    with open('last_time_practiced.txt', 'w+') as f:
+        f.write(datetime.datetime.now().isoformat())
+
+def trigger_sing():
+    # end the recording before doing anything else
+    if recording:
+        end_recording()
+
+    if singing:
+        end_singing()
+    else:
+        start_singing()
+
+def start_singing():
+    global recording
+    global listening
+    global singing
+    singing = True
+    recording = False
+    listening = False
+
+    send_serial('s')
+    playback()
+
+def end_singing():
+    global singing
+    global play_pid
+
+    singing = False
+    send_serial('d')
+    # if still playing, kill the playback process
+    if pid_active(play_pid):
+        p = psutil.Process(play_pid)
+        p.terminate()
+    print "playback ending...so sad..."
+    play_pid = None
+
+def trigger_listen():
+    # end the recording before doing anything else
+    if recording:
+        end_recording()
+
+    if listening:
+        end_listening()
+    else:
+        start_listening()
+
+def start_listening():
+    global recording
+    global listening
+    global singing
+    listening = True
+    recording = False
+    singing = False
+
+    send_serial('l')
+
+def end_listening():
+    global listening
+    listening = False
+    send_serial('d')
 
 def send_serial(ch):
-    # d, l, s, c
-    with serial.Serial('comport') as ser:
-        ser.write(ch)
+    # d, r, s, c
+    for i in range(0,2):
+        try:
+            ser.write(ch)
+        except:
+            print "failed to send '", ch, "'... try again"
+
+def pid_active(pid):
+    return pid in psutil.pids()
+
+
+def calc_hunger():
+    # get last time entered listen or record state
+    try:
+        with open('last_time_practiced.txt', 'r+') as f:
+            # process last date
+            lastdatestr = f.readline()
+            if lastdatestr:
+                lastdate = datetime.datetime.strptime(lastdatestr, "%Y-%m-%dT%H:%M:%S.%f")
+                now = datetime.datetime.now()
+                difference = now - lastdate
+                days = difference.days
+            else:
+                days = 0
+            send_serial('h')
+            sleep(3)
+            send_serial(bytes([days]))
+            print "it's been ", days, " since you practiced"
+            return days
+    except:
+        print "oh no file error"
+        return 0
+
+
+ser = serial.Serial('/dev/ttyS0')
+sleep(1) # wait for channel to open
+# hunger = calc_hunger()
+
+# initialize as dreaming
+send_serial('d')
+
+startup() # setting up code to initialize the board/uploads
+
+while True: # continually in this state, check if channel HI
+    # record
+    if GPIO.event_detected(record_channel) and GPIO.input(record_channel):
+        trigger_record() # on button press, trigger callback
+        sleep(3) # wait 3 secs for debouncing, bad but works.
+
+    # listen
+    if GPIO.event_detected(listen_channel) and GPIO.input(listen_channel):
+        print "listening..."
+        trigger_listen()
+        sleep(3) # wait 3 secs for debouncing, bad but works.
+
+    # sing
+    if GPIO.event_detected(sing_channel) and GPIO.input(sing_channel):
+        print "singing..."
+        trigger_sing()
+        sleep(3) # wait 3 secs for debouncing, bad but works.
+
+    # end play state when process ends
+    if play_pid:
+        if not pid_active(play_pid):
+            end_singing()
+
