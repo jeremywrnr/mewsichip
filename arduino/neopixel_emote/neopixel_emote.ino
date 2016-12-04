@@ -80,6 +80,9 @@ void loop() {
 
   for(int i=range[0];i < range[1]; i++){
     pixels.setPixelColor(i, pixels.Color(r_base*(intensity/100.0),g_base*(intensity/100.0),b_base*(intensity/100.0)));
+    if (colorChange) {
+      delay(30);
+    }
     randomSpark(i);
 
     //too hungry
@@ -92,6 +95,9 @@ void loop() {
     //red recording light
     if (isrecording) {
       pixels.setPixelColor(rec_pixel, pixels.Color(255, 0, 0));  
+      pixels.setPixelColor((rec_pixel + 1)%16, pixels.Color(255, 0, 0)); 
+      pixels.setPixelColor(rec_pixel - 1, pixels.Color(255, 0, 0));  
+ 
     }
     pixels.show(); 
     delay(delayval);
@@ -131,9 +137,9 @@ void nextIntensity() {
 
 void nextColor() {
   if (colorChange) {
-    r_base = r_base + random(-10, 10);
-    g_base = g_base + random(-10, 10);
-    b_base = b_base + random(-10, 10);
+    r_base = r_base + random(-20, 20);
+    g_base = g_base + random(-20, 20);
+    b_base = b_base + random(-20, 20);
   }
 }
 
@@ -155,7 +161,7 @@ void dreaming() {
      range[0] = 0;
      range[1] = 16;
      speed = 2;
-     max = min(100, health);
+     max = min(150, health);
      min = 0;
      r_base = 0;
      g_base = 50;
@@ -168,7 +174,7 @@ void two_connected() {
      range[0] = 10;
      range[1] = 16;
      speed = 10;
-     max = min(150, health);
+     max = min(200, health);
      min = 20;
      r_base = 75;
      g_base = 40;
@@ -180,7 +186,7 @@ void recording() {
      range[0] = 0;
      range[1] = 16;
      speed = 10;
-     max = min(150, health);
+     max = min(200, health);
      min = 20;
      r_base = 50;
      g_base = 30;
@@ -192,7 +198,7 @@ void singing() {
      range[0] = 0;
      range[1] = 16;
      speed = 8;
-     max = min(150, health);
+     max = min(200, health);
      min = 20;
      r_base = 10;
      g_base = 70;
@@ -204,7 +210,7 @@ void listening() {
      range[0] = 0;
      range[1] = 16;
      speed = 8;
-     max = min(150, health);
+     max = min(200, health);
      min = 20;
      r_base = 70;
      g_base = 70;
@@ -216,7 +222,7 @@ void uploading() {
      range[0] = 10;
      range[1] = 16;
      speed = 15;
-     max = min(150, health);
+     max = min(200, health);
      min = 20;
      r_base = 70;
      g_base = 0;
