@@ -4,7 +4,6 @@
 #endif
 
 #define PIN            6
-#define MOTORPIN       8
 #define NUMPIXELS      16
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
@@ -108,16 +107,6 @@ void randomSpark(int i) {
   if (random(0,70) == 1) {
     pixels.setPixelColor(i, pixels.Color(random(0,50),random(0,50), random(0,50)));
   }
-}
-
-void vibrate() {
-  for(int i=range[0];i < range[1]; i++){
-    pixels.setPixelColor(i, pixels.Color(r_base*(intensity/100.0),g_base*(intensity/100.0),b_base*(intensity/100.0)));
-    pixels.show(); 
-  }
-  analogWrite(MOTORPIN, 150);
-  delay(1500);
-  analogWrite(MOTORPIN, 0);
 }
 
 void nextIntensity() {
