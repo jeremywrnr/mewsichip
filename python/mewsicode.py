@@ -51,7 +51,7 @@ def playback():
     # get a random audio clip to play from the audio folder
     path = '/home/chip/audio'
     music_files = [f for f in os.listdir(path) if f.endswith('.mp3')]
-    playback_fname = music_files[random.randint(0, len(music_files))]
+    playback_fname = path + '/' + music_files[random.randint(0, len(music_files))]
 
     args = ['mpg123', playback_fname]
     playproc = subprocess.Popen(args)
@@ -285,19 +285,20 @@ while True: # continually in this state, check if channel HI
         trigger_listen()
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
-    # sing
-    if GPIO.event_detected(sing_channel) and GPIO.input(sing_channel):
+    # start sing
+    if not singing and GPIO.input(sing_channel):
         print "singing..."
         start_singing()
         sleep(3) # wait 3 secs for debouncing, bad but works.
     
-    if GPIO.event_detected(sing_channel) and not GPIO.input(sing_channel):
+    # end sing
+    if singing and not GPIO.input(sing_channel):
         print "stop singing..."
         end_singing()
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # end play state when process ends
-    if play_pid:
-        if not pid_active(play_pid):
-            end_singing()
+    # if play_pid:
+    #     if not pid_active(play_pid):
+    #         end_singing()
 
