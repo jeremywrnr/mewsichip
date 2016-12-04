@@ -8,6 +8,7 @@ import psutil
 import sys
 import os
 import serial
+import random
 
 GPIO.cleanup()
 outled = "XIO-P1"
@@ -41,12 +42,17 @@ fname = None
 bname = None
 mpid = None
 play_pid = None
-playback_fname = "/home/chip/audio/test.mp3"
 
 # trigger playback of audio file
 def playback():
     global play_pid
     print("Starting playback...")
+
+    # get a random audio clip to play from the audio folder
+    path = '/home/chip/audio'
+    music_files = [f for f in os.listdir(path) if f.endswith('.mp3')]
+    playback_fname = music_files[random.randint(0, len(music_files))]
+
     args = ['mpg123', playback_fname]
     playproc = subprocess.Popen(args)
     play_pid = psutil.Process(playproc.pid)
