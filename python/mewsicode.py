@@ -166,17 +166,21 @@ def write_time_to_file():
     with open('last_time_practiced.txt', 'w+') as f:
         f.write(datetime.datetime.now().isoformat())
 
-def trigger_sing():
+# def trigger_sing():
+#     # end the recording before doing anything else
+#     if recording:
+#         end_recording()
+
+#     if singing:
+#         end_singing()
+#     else:
+#         start_singing()
+
+def start_singing():
     # end the recording before doing anything else
     if recording:
         end_recording()
 
-    if singing:
-        end_singing()
-    else:
-        start_singing()
-
-def start_singing():
     global recording
     global listening
     global singing
@@ -284,7 +288,12 @@ while True: # continually in this state, check if channel HI
     # sing
     if GPIO.event_detected(sing_channel) and GPIO.input(sing_channel):
         print "singing..."
-        trigger_sing()
+        start_singing()
+        sleep(3) # wait 3 secs for debouncing, bad but works.
+    
+    if GPIO.event_detected(sing_channel) and not GPIO.input(sing_channel):
+        print "stop singing..."
+        end_singing()
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # end play state when process ends
