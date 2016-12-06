@@ -13,18 +13,18 @@ import random
 GPIO.cleanup()
 outled = "XIO-P1"
 record_channel = "XIO-P0"
-listen_channel = "XIO-P3"
+# listen_channel = "XIO-P3"
 sing_channel = "XIO-P2"
 
 GPIO.setup(record_channel, GPIO.IN)
-GPIO.setup(listen_channel, GPIO.IN)
+# GPIO.setup(listen_channel, GPIO.IN)
 GPIO.setup(sing_channel, GPIO.IN)
 
 GPIO.setup(outled, GPIO.OUT)
 GPIO.output(outled, GPIO.HIGH)
 
 GPIO.add_event_detect(record_channel, GPIO.RISING)
-GPIO.add_event_detect(listen_channel, GPIO.RISING)
+# GPIO.add_event_detect(listen_channel, GPIO.RISING)
 GPIO.add_event_detect(sing_channel, GPIO.RISING)
 
 
@@ -49,9 +49,8 @@ def playback():
     print("Starting playback...")
 
     # get a random audio clip to play from the audio folder
-    path = '/home/chip/audio'
     music_files = [f for f in os.listdir(path) if f.endswith('.mp3')]
-    playback_fname = path + '/' + music_files[random.randint(0, len(music_files))]
+    playback_fname = audioLoc + music_files[random.randint(0, len(music_files))]
 
     args = ['mpg123', playback_fname]
     playproc = subprocess.Popen(args)
@@ -280,10 +279,10 @@ while True: # continually in this state, check if channel HI
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # listen
-    if GPIO.event_detected(listen_channel) and GPIO.input(listen_channel):
-        print "listening..."
-        trigger_listen()
-        sleep(3) # wait 3 secs for debouncing, bad but works.
+    # if GPIO.event_detected(listen_channel) and GPIO.input(listen_channel):
+    #     print "listening..."
+    #     trigger_listen()
+    #     sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # start sing
     if not singing and not GPIO.input(sing_channel):
