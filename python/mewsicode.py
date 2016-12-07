@@ -9,6 +9,7 @@ import sys
 import os
 import serial
 import random
+from datetime import timedelta
 
 GPIO.cleanup()
 record_channel = "XIO-P0"
@@ -268,6 +269,8 @@ def calc_hunger():
         return 0
 
 
+last_time = -1
+
 ser = serial.Serial('/dev/ttyS0')
 sleep(1) # wait for channel to open
 # hunger = calc_hunger()
@@ -289,17 +292,23 @@ while True: # continually in this state, check if channel HI
     #     trigger_listen()
     #     sleep(3) # wait 3 secs for debouncing, bad but works.
 
-    # start sing
+    # start sing 
     if not singing and not GPIO.input(sing_channel):
-        print "singing..."
-        start_singing()
-        sleep(3) # wait 3 secs for debouncing, bad but works.
+        if last_time is -1:
+            last_time = datetime.datetime.now()
+        else:
+            if datetime.datetime.now() - last_time > timedelta(0, 0, 250):
+                last_time = -1
+                print "singing..."
+                start_singing()
+                sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # # end sing
     if singing and GPIO.input(sing_channel):
         print "stop singing..."
         end_singing()
         sleep(3) # wait 3 secs for debouncing, bad but works.
+
 
     # end play state when process ends
     # if play_pid:
