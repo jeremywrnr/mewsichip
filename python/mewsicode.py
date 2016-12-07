@@ -279,7 +279,7 @@ startup() # setting up code to initialize the board/uploads
 
 while True: # continually in this state, check if channel HI
     # record
-    if GPIO.event_detected(record_channel) and GPIO.input(record_channel):
+    if GPIO.event_detected(record_channel) and not GPIO.input(record_channel):
         trigger_record() # on button press, trigger callback
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
