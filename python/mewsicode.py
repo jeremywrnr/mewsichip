@@ -146,10 +146,10 @@ def start_recording():
     listening = False
     singing = False
 
-    global hunger
-    hunger = 0
+    # global hunger
+    # hunger = 0
 
-    write_time_to_file()
+    # write_time_to_file()
     send_serial('r')
     record()
 
@@ -164,15 +164,9 @@ def write_time_to_file():
         f.write(datetime.datetime.now().isoformat())
 
 def start_singing():
-    # end the recording before doing anything else
-    if recording:
-        end_recording()
-
-    global recording
     global listening
     global singing
     singing = True
-    recording = False
     listening = False
 
     send_serial('s')
@@ -191,10 +185,7 @@ def end_singing():
     print "playback ending."
     play_pid = None
 
-def trigger_listen():
-    # end the recording before doing anything else
-    if recording:
-        end_recording()
+def trigger_listen():   
     if listening:
         end_listening()
     else:
@@ -269,18 +260,19 @@ while True: # continually in this state, check if channel HI
         # THIS MEANS RECORD FOR AT LEAST 10 seconds please:
 
     # start sing
-    if not singing and not GPIO.input(sing_channel):
-        if last_time is -1:
-            last_time = datetime.datetime.now()
-        else:
-            if datetime.datetime.now() - last_time > timedelta(0, 0, 250):
-                last_time = -1
-                print "singing..."
-                start_singing()
-                sleep(3) # wait 3 secs for debouncing, bad but works.
+    if not recording: 
+        if not singing and not GPIO.input(sing_channel):
+            if last_time is -1:
+                last_time = datetime.datetime.now()
+            else:
+                if datetime.datetime.now() - last_time > timedelta(0, 0, 250):
+                    last_time = -1
+                    print "singing..."
+                    start_singing()
+                    sleep(3) # wait 3 secs for debouncing, bad but works.
 
-    # # end sing
-    if singing and GPIO.input(sing_channel):
-        print "stop singing..."
-        end_singing()
-        sleep(3) # wait 3 secs for debouncing, bad but works.
+        # # end sing
+        if singing and GPIO.input(sing_channel):
+            print "stop singing..."
+            end_singing()
+            sleep(3) # wait 3 secs for debouncing, bad but works.
