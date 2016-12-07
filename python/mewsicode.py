@@ -23,9 +23,9 @@ GPIO.setup(sing_channel, GPIO.IN)
 # GPIO.setup(outled, GPIO.OUT)
 # GPIO.output(outled, GPIO.HIGH)
 
-# GPIO.add_event_detect(record_channel, GPIO.RISING)
-# GPIO.add_event_detect(sing_channel, GPIO.RISING)
-# GPIO.add_event_detect(listen_channel, GPIO.RISING)
+GPIO.add_event_detect(record_channel, GPIO.RISING)
+GPIO.add_event_detect(sing_channel, GPIO.RISING)
+GPIO.add_event_detect(listen_channel, GPIO.RISING)
 
 
 # hardcoded file locations
