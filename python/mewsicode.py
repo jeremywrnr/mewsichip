@@ -11,17 +11,17 @@ import serial
 import random
 
 GPIO.cleanup()
-outled = "XIO-P1"
 record_channel = "XIO-P0"
+sing_channel = "XIO-P1"
 # listen_channel = "XIO-P3"
-sing_channel = "XIO-P2"
+# outled = "XIO-P1"
 
 GPIO.setup(record_channel, GPIO.IN)
 # GPIO.setup(listen_channel, GPIO.IN)
 GPIO.setup(sing_channel, GPIO.IN)
 
-GPIO.setup(outled, GPIO.OUT)
-GPIO.output(outled, GPIO.HIGH)
+# GPIO.setup(outled, GPIO.OUT)
+# GPIO.output(outled, GPIO.HIGH)
 
 GPIO.add_event_detect(record_channel, GPIO.RISING)
 # GPIO.add_event_detect(listen_channel, GPIO.RISING)
@@ -74,7 +74,7 @@ def startup():
 def record():
     global fname, bname, mpid
     print("Starting recording...")
-    GPIO.output(outled, GPIO.LOW)
+    # GPIO.output(outled, GPIO.LOW)
 
     bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
     fname =  bname + '.wav'
@@ -102,7 +102,7 @@ def retryUpload(file):
 # trigger external uploading if connected to the network
 def upload():
     global mname
-    GPIO.output(outled, GPIO.HIGH)
+    # GPIO.output(outled, GPIO.HIGH)
     print("\nStopping recording...")
     mpid.terminate() # from record()
     mname = bname + ".mp3"
@@ -289,7 +289,7 @@ while True: # continually in this state, check if channel HI
         print "singing..."
         start_singing()
         sleep(3) # wait 3 secs for debouncing, bad but works.
-    
+
     # end sing
     if singing and GPIO.input(sing_channel):
         print "stop singing..."
