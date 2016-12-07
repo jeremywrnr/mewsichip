@@ -13,7 +13,7 @@ import os
 
 GPIO.cleanup()
 sing_channel = "XIO-P1"
-record_channel = "XIO-P2"
+record_channel = "XIO-P7"
 
 GPIO.setup(record_channel, GPIO.IN)
 GPIO.setup(sing_channel, GPIO.IN)
