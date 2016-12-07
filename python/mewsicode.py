@@ -137,6 +137,7 @@ def upload():
         print(e.output)
 
 def trigger_record():
+    print 'trigger record'
     if recording:
         end_recording()
         send_serial('d')
