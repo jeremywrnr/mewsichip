@@ -16,16 +16,16 @@ sing_channel = "XIO-P1"
 # listen_channel = "XIO-P3"
 # outled = "XIO-P1"
 
-GPIO.setup(record_channel, GPIO.IN)
 # GPIO.setup(listen_channel, GPIO.IN)
+GPIO.setup(record_channel, GPIO.IN)
 GPIO.setup(sing_channel, GPIO.IN)
 
 # GPIO.setup(outled, GPIO.OUT)
 # GPIO.output(outled, GPIO.HIGH)
 
-GPIO.add_event_detect(record_channel, GPIO.RISING)
+# GPIO.add_event_detect(record_channel, GPIO.RISING)
+# GPIO.add_event_detect(sing_channel, GPIO.RISING)
 # GPIO.add_event_detect(listen_channel, GPIO.RISING)
-GPIO.add_event_detect(sing_channel, GPIO.RISING)
 
 
 # hardcoded file locations
