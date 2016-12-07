@@ -12,8 +12,8 @@ import sys
 import os
 
 GPIO.cleanup()
-record_channel = "XIO-P0"
 sing_channel = "XIO-P1"
+record_channel = "XIO-P2"
 
 GPIO.setup(record_channel, GPIO.IN)
 GPIO.setup(sing_channel, GPIO.IN)
@@ -162,7 +162,7 @@ def end_recording():
 def write_time_to_file():
     with open('last_time_practiced.txt', 'w+') as f:
         f.write(datetime.datetime.now().isoformat())
- 
+
 def start_singing():
     # end the recording before doing anything else
     if recording:
@@ -266,7 +266,7 @@ while True: # continually in this state, check if channel HI
         trigger_record() # on button press, trigger callback
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
-    # start sing 
+    # start sing
     if not singing and not GPIO.input(sing_channel):
         if last_time is -1:
             last_time = datetime.datetime.now()
