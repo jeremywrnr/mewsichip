@@ -290,16 +290,16 @@ while True: # continually in this state, check if channel HI
     #     sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # start sing
-    if not singing and not GPIO.input(sing_channel):
-        print "singing..."
-        start_singing()
-        sleep(3) # wait 3 secs for debouncing, bad but works.
+    # if not singing and not GPIO.input(sing_channel):
+    #     print "singing..."
+    #     start_singing()
+    #     sleep(3) # wait 3 secs for debouncing, bad but works.
 
-    # end sing
-    if singing and GPIO.input(sing_channel):
-        print "stop singing..."
-        end_singing()
-        sleep(3) # wait 3 secs for debouncing, bad but works.
+    # # end sing
+    # if singing and GPIO.input(sing_channel):
+    #     print "stop singing..."
+    #     end_singing()
+    #     sleep(3) # wait 3 secs for debouncing, bad but works.
 
     # end play state when process ends
     # if play_pid:
