@@ -50,7 +50,9 @@ def playback():
 
     # get a random audio clip to play from the audio folder
     music_files = [f for f in os.listdir(audioLoc) if f.endswith('.mp3')]
-    playback_fname = audioLoc + music_files[random.randint(0, len(music_files))]
+    music_path = audioLoc + music_files[random.randint(0, len(music_files))]
+    print music_path
+    playback_fname = music_path
 
     args = ['mpg123', playback_fname]
     playproc = subprocess.Popen(args)
