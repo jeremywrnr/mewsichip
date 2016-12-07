@@ -265,7 +265,8 @@ while True: # continually in this state, check if channel HI
     # record ing
     if GPIO.event_detected(record_channel) and not GPIO.input(record_channel):
         trigger_record() # on button press, trigger callback
-        sleep(3) # wait 3 secs for debouncing, bad but works.
+        sleep(10) # wait 10 secs for debouncing, bad but works.
+        # THIS MEANS RECORD FOR AT LEAST 10 seconds please:
 
     # start sing
     if not singing and not GPIO.input(sing_channel):
