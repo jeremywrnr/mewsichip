@@ -1,32 +1,25 @@
 # mewsician CHIP code, by team goacat.
 
 import CHIP_IO.GPIO as GPIO
+from datetime import timedelta
 from time import sleep
 import subprocess
 import datetime
+import serial
+import random
 import psutil
 import sys
 import os
-import serial
-import random
-from datetime import timedelta
 
 GPIO.cleanup()
 record_channel = "XIO-P0"
 sing_channel = "XIO-P1"
-# listen_channel = "XIO-P3"
-# outled = "XIO-P1"
 
-# GPIO.setup(listen_channel, GPIO.IN)
 GPIO.setup(record_channel, GPIO.IN)
 GPIO.setup(sing_channel, GPIO.IN)
 
-# GPIO.setup(outled, GPIO.OUT)
-# GPIO.output(outled, GPIO.HIGH)
-
 GPIO.add_event_detect(record_channel, GPIO.RISING)
 GPIO.add_event_detect(sing_channel, GPIO.RISING)
-# GPIO.add_event_detect(listen_channel, GPIO.RISING)
 
 
 # hardcoded file locations
@@ -39,10 +32,10 @@ authentication = sys.argv[1]
 recording = False
 listening = False
 singing = False
+play_pid = None
 fname = None
 bname = None
 mpid = None
-play_pid = None
 
 # trigger playback of audio file
 def playback():
@@ -51,13 +44,13 @@ def playback():
 
     # get a random audio clip to play from the audio folder
     music_files = [f for f in os.listdir(audioLoc) if f.endswith('.mp3')]
-    if len(music_files) is not 0:
+    if len(music_files) > 0:
         m_index = random.randint(0, len(music_files)-1)
         print 'm_index is', m_index
         music_path = audioLoc + music_files[m_index]
         playback_fname = music_path
 
-        args = ['mpg123', playback_fname]
+        args = ['mplayer', playback_fname]
         playproc = subprocess.Popen(args)
         play_pid = psutil.Process(playproc.pid)
     else:
@@ -81,7 +74,6 @@ def startup():
 def record():
     global fname, bname, mpid
     print("Starting recording...")
-    # GPIO.output(outled, GPIO.LOW)
 
     bname = datetime.datetime.now().strftime("%Y-%m-%d @ %H:%M:%S")
     fname =  bname + '.wav'
@@ -109,7 +101,6 @@ def retryUpload(file):
 # trigger external uploading if connected to the network
 def upload():
     global mname
-    # GPIO.output(outled, GPIO.HIGH)
     print("\nStopping recording...")
     mpid.terminate() # from record()
     mname = bname + ".mp3"
@@ -159,7 +150,6 @@ def start_recording():
     hunger = 0
 
     write_time_to_file()
-
     send_serial('r')
     record()
 
@@ -172,17 +162,7 @@ def end_recording():
 def write_time_to_file():
     with open('last_time_practiced.txt', 'w+') as f:
         f.write(datetime.datetime.now().isoformat())
-
-# def trigger_sing():
-#     # end the recording before doing anything else
-#     if recording:
-#         end_recording()
-
-#     if singing:
-#         end_singing()
-#     else:
-#         start_singing()
-
+ 
 def start_singing():
     # end the recording before doing anything else
     if recording:
@@ -208,14 +188,13 @@ def end_singing():
     if pid_active(play_pid):
         p = psutil.Process(play_pid)
         p.terminate()
-    print "playback ending...so sad..."
+    print "playback ending."
     play_pid = None
 
 def trigger_listen():
     # end the recording before doing anything else
     if recording:
         end_recording()
-
     if listening:
         end_listening()
     else:
@@ -228,7 +207,6 @@ def start_listening():
     listening = True
     recording = False
     singing = False
-
     send_serial('l')
 
 def end_listening():
@@ -288,12 +266,6 @@ while True: # continually in this state, check if channel HI
         trigger_record() # on button press, trigger callback
         sleep(3) # wait 3 secs for debouncing, bad but works.
 
-    # listen
-    # if GPIO.event_detected(listen_channel) and GPIO.input(listen_channel):
-    #     print "listening..."
-    #     trigger_listen()
-    #     sleep(3) # wait 3 secs for debouncing, bad but works.
-
     # start sing 
     if not singing and not GPIO.input(sing_channel):
         if last_time is -1:
@@ -310,10 +282,3 @@ while True: # continually in this state, check if channel HI
         print "stop singing..."
         end_singing()
         sleep(3) # wait 3 secs for debouncing, bad but works.
-
-
-    # end play state when process ends
-    # if play_pid:
-    #     if not pid_active(play_pid):
-    #         end_singing()
-
