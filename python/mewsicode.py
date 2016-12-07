@@ -52,7 +52,9 @@ def playback():
     # get a random audio clip to play from the audio folder
     music_files = [f for f in os.listdir(audioLoc) if f.endswith('.mp3')]
     if len(music_files) is not 0:
-        music_path = audioLoc + music_files[random.randint(0, len(music_files))]
+        m_index = random.randint(0, len(music_files)-1)
+        print 'm_index is', m_index
+        music_path = audioLoc + music_files[m_index]
         playback_fname = music_path
 
         args = ['mpg123', playback_fname]
