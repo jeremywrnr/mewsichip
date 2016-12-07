@@ -261,7 +261,7 @@ send_serial('d')
 startup() # setting up code to initialize the board/uploads
 
 while True: # continually in this state, check if channel HI
-    print(GPIO.input(record_channel))
+    # print(GPIO.input(record_channel))
     # record ing
     if GPIO.event_detected(record_channel) and not GPIO.input(record_channel):
         trigger_record() # on button press, trigger callback
