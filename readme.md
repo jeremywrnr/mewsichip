@@ -48,6 +48,10 @@ restart mew service
 
 ### demo videos
 
+final project video
+
+[![final project video](http://img.youtube.com/vi/hWpbkYcAkbg/0.jpg)](http://www.youtube.com/watch?v=hWpbkYcAkbg)
+
 alpha workflow
 
 [![alpha prototype demo video](http://img.youtube.com/vi/-4KjWFd3zv4/0.jpg)](http://www.youtube.com/watch?v=-4KjWFd3zv4)
@@ -55,3 +59,4 @@ alpha workflow
 hardware / server link
 
 [![hardware prototype demo video](http://img.youtube.com/vi/5e9CuM0uRTQ/0.jpg)](http://www.youtube.com/watch?v=5e9CuM0uRTQ)
+
