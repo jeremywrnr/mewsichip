@@ -1,6 +1,8 @@
 [mewsichip](http://mewsician.win) :cat2:
 ========================================
 
+[![final project video](http://img.youtube.com/vi/hWpbkYcAkbg/0.jpg)](http://www.youtube.com/watch?v=hWpbkYcAkbg)
+
 Embedded code for the CHIP for the mewsician project.
 
 
@@ -47,10 +49,6 @@ restart mew service
 
 
 ### demo videos
-
-final project video
-
-[![final project video](http://img.youtube.com/vi/hWpbkYcAkbg/0.jpg)](http://www.youtube.com/watch?v=hWpbkYcAkbg)
 
 alpha workflow
 
