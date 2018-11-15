@@ -13,7 +13,7 @@ Embedded code for the CHIP for the mewsician project.
 
 ### resources
 
-- [mewsician website](http://mewsician.win)
+- [mewsician website](https://github.com/jeremywrnr/mewsichip)
 - [mewsician github repo](https://github.com/radiolarian/mewsician)
 - [chip gpio documentation](http://docs.getchip.com/chip.html#physical-connectors)
 - [adafruit headphone schematic](https://cdn-shop.adafruit.com/product-files/1699/STX3120.pdf)
