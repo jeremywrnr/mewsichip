@@ -1,5 +1,5 @@
-:cat: mewsichip :cat2:
-=======================
+:cat2: mewsichip
+================
 
 [![final project video](http://img.youtube.com/vi/hWpbkYcAkbg/0.jpg)](http://www.youtube.com/watch?v=hWpbkYcAkbg)
 
